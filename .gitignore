@@ -32,3 +32,6 @@ Thumbs.db
 *.tfstate
 *.tfstate.backup
 .terraform/
+
+# include lambda payload
+!lambda/lambda.zip
