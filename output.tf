@@ -28,18 +28,17 @@ output "tags" {
   value       = ["${module.server.tags}"]
 }
 
-
 output "generated_cloud_config" {
   description = "The rendered cloudinit config"
-  value = "${module.server.generated_cloud_config}"
+  value       = "${module.server.generated_cloud_config}"
 }
 
 output "generated_cloud_init_config" {
   description = "The rendered cloud-init config"
-  value = "${module.server.generated_cloud_init_config}"
+  value       = "${module.server.generated_cloud_init_config}"
 }
 
 output "generated_ansible_playbook" {
   description = "The rendered ansible playbook"
-  value = "${module.server.generated_ansible_playbook}"
+  value       = "${module.server.generated_ansible_playbook}"
 }
