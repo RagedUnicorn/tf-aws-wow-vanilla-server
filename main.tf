@@ -14,6 +14,10 @@ provider "aws" {
 ###################################
 # Module user-data template script
 ###################################
+data "template_file" "compose_file_stack" {
+  template = "${file("${path.module}/templates/docker-compose.stack.tpl")}"
+}
+
 data "template_file" "init" {
   template = "${file("${path.module}/templates/instance-entrypoint.tpl")}"
 
@@ -23,6 +27,7 @@ data "template_file" "init" {
     mysql_root_password     = "${var.mysql_root_password}"
     mysql_app_user          = "${var.mysql_app_user}"
     mysql_app_user_password = "${var.mysql_app_user_password}"
+    docker_compose_content  = "${base64encode(data.template_file.compose_file_stack.rendered)}"
   }
 }
 
@@ -62,6 +67,7 @@ resource "aws_security_group" "ssh" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
 
 resource "aws_security_group" "outbound" {
   name        = "${var.outbound_security_group_name}"
