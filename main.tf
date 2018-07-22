@@ -133,6 +133,17 @@ data "aws_iam_policy_document" "ec2_lambda_policy_document" {
   }
 }
 
+data "aws_iam_policy_document" "lambda_assume_role_policy_document" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+  }
+}
+
 resource "aws_iam_role_policy" "cloudwatch_lambda_policy" {
   name   = "rg_tf_wow_vanilla_server_cloudwatch"
   role   = "${aws_iam_role.lambda_execution_role.id}"
@@ -151,20 +162,7 @@ resource "aws_iam_role_policy" "ec2_lambda_policy" {
 resource "aws_iam_role" "lambda_execution_role" {
   name = "rg-tf-lambda-wow-vanilla-server"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      }
-    }
-  ]
-}
-EOF
+  assume_role_policy = "${data.aws_iam_policy_document.lambda_assume_role_policy_document.json}"
 }
 
 ###################
