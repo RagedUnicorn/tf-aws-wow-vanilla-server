@@ -1,6 +1,13 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Deploy a docker ec2 instance for running a mangos based Vanilla World of Warcraft server
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+terraform {
+  backend "s3" {
+    bucket = "rg-tf-wow-vanilla-server"
+    key    = "wow-vanilla-server.terraform.tfstate"
+    region = "eu-central-1"
+  }
+}
 
 ###############
 # AWS provider
