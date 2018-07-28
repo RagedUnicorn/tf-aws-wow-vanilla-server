@@ -23,6 +23,7 @@ services:
       - com.ragedunicorn.mysql.app_user_password
     environment:
       - DATABASE_HOSTNAME=wow-vanilla-database
+      - PUBLIC_IP="$${PUBLIC_IP}"
     ports:
       - "8085:8085"
       - "3724:3724"

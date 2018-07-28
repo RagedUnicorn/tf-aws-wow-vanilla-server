@@ -5,6 +5,9 @@
 # abort when trying to use unset variable
 set -euo pipefail
 
+# get public ip from ec2 metadata service and set as environment variable
+echo "PUBLIC_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)" | sudo tee -a /etc/environment  -
+
 # enable experimental for docker
 echo "{\"experimental\": true }" | sudo tee /etc/docker/daemon.json
 
