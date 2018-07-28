@@ -38,6 +38,31 @@ data "template_file" "init" {
   }
 }
 
+resource "aws_vpc" "default" {
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_hostnames = true
+}
+
+resource "aws_internet_gateway" "gateway" {
+  vpc_id = "${aws_vpc.default.id}"
+}
+
+resource "aws_subnet" "subnet" {
+  vpc_id                  = "${aws_vpc.default.id}"
+  cidr_block              = "10.0.0.0/24"
+  map_public_ip_on_launch = true
+
+  depends_on = ["aws_internet_gateway.gateway"]
+}
+
+resource "aws_eip" "elastic_ip" {
+  vpc = true
+
+  instance                  = "${module.server.id}"
+  associate_with_private_ip = "${var.private_ip}"
+  depends_on                = ["aws_internet_gateway.gateway"]
+}
+
 module "server" {
   # source     = "github.com/ragedunicorn/terraform-aws-rg-docker"
   source     = "../terraform-aws-rg-docker"
@@ -53,6 +78,8 @@ module "server" {
 
   docker_instance_name = "${var.docker_instance_name}"
   instance_entrypoint  = "${data.template_file.init.rendered}"
+  private_ip           = "${var.private_ip}"
+  subnet_id            = "${aws_subnet.subnet.id}"
   key_name             = "${var.key_name}"
   operator_user        = "${var.operator_user}"
   operator_group       = "${var.operator_group}"
@@ -65,6 +92,7 @@ module "server" {
 resource "aws_security_group" "ssh" {
   name        = "${var.ssh_security_group_name}"
   description = "Default security group with ssh access for any ip-address"
+  vpc_id      = "${aws_vpc.default.id}"
 
   # ssh
   ingress {
@@ -75,10 +103,10 @@ resource "aws_security_group" "ssh" {
   }
 }
 
-
 resource "aws_security_group" "outbound" {
   name        = "${var.outbound_security_group_name}"
   description = "Default security group for outbound tcp traffic"
+  vpc_id      = "${aws_vpc.default.id}"
 
   egress {
     from_port   = 0
@@ -91,6 +119,7 @@ resource "aws_security_group" "outbound" {
 resource "aws_security_group" "wow_vanilla" {
   name        = "${var.wow_vanilla_security_group_name}"
   description = "Allow incoming traffic to realmd and mangosd"
+  vpc_id      = "${aws_vpc.default.id}"
 
   # Allow inbound for mangosd
   ingress {
@@ -158,13 +187,13 @@ data "aws_iam_policy_document" "lambda_assume_role_policy_document" {
 }
 
 resource "aws_iam_role_policy" "cloudwatch_lambda_policy" {
-  name   = "rg_tf_wow_vanilla_server_cloudwatch"
+  name   = "rg-tf-wow-vanilla-server-cloudwatch"
   role   = "${aws_iam_role.lambda_execution_role.id}"
   policy = "${data.aws_iam_policy_document.cloudwatch_lambda_policy_document.json}"
 }
 
 resource "aws_iam_role_policy" "ec2_lambda_policy" {
-  name   = "rg_tf_wow_vanilla_server_ec2"
+  name   = "rg-tf-wow-vanilla-server-ec2"
   role   = "${aws_iam_role.lambda_execution_role.id}"
   policy = "${data.aws_iam_policy_document.ec2_lambda_policy_document.json}"
 }

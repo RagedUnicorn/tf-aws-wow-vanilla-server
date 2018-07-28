@@ -2,6 +2,7 @@ variable "aws_region" {}
 variable "access_key" {}
 variable "secret_key" {}
 variable "key_name" {}
+variable "private_ip" {}
 variable "operator_group" {}
 variable "operator_user" {}
 variable "operator_password" {}
