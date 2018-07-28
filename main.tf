@@ -41,16 +41,41 @@ data "template_file" "init" {
 resource "aws_vpc" "default" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
+
+  tags {
+    Name = "tf-wow-vanilla-server"
+  }
 }
 
 resource "aws_internet_gateway" "gateway" {
   vpc_id = "${aws_vpc.default.id}"
+
+  tags {
+    Name = "tf-wow-vanilla-server"
+  }
+}
+
+resource "aws_route_table" "route_table" {
+  vpc_id = "${aws_vpc.default.id}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.gateway.id}"
+  }
+
+  tags {
+    Name = "tf-wow-vanilla-server"
+  }
 }
 
 resource "aws_subnet" "subnet" {
   vpc_id                  = "${aws_vpc.default.id}"
   cidr_block              = "10.0.0.0/24"
   map_public_ip_on_launch = true
+
+  tags {
+    Name = "tf-wow-vanilla-server"
+  }
 
   depends_on = ["aws_internet_gateway.gateway"]
 }
@@ -60,7 +85,12 @@ resource "aws_eip" "elastic_ip" {
 
   instance                  = "${module.server.id}"
   associate_with_private_ip = "${var.private_ip}"
-  depends_on                = ["aws_internet_gateway.gateway"]
+
+  tags {
+    Name = "tf-wow-vanilla-server"
+  }
+
+  depends_on = ["aws_internet_gateway.gateway"]
 }
 
 module "server" {
