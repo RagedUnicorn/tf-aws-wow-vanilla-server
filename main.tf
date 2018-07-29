@@ -43,7 +43,7 @@ resource "aws_vpc" "default" {
   enable_dns_hostnames = true
 
   tags {
-    Name = "tf-wow-vanilla-server"
+    Name = "rg-tf-wow-vanilla-server"
   }
 }
 
@@ -51,7 +51,7 @@ resource "aws_internet_gateway" "gateway" {
   vpc_id = "${aws_vpc.default.id}"
 
   tags {
-    Name = "tf-wow-vanilla-server"
+    Name = "rg-tf-wow-vanilla-server"
   }
 }
 
@@ -64,7 +64,7 @@ resource "aws_route_table" "route_table" {
   }
 
   tags {
-    Name = "tf-wow-vanilla-server"
+    Name = "rg-tf-wow-vanilla-server"
   }
 }
 
@@ -74,7 +74,7 @@ resource "aws_subnet" "subnet" {
   map_public_ip_on_launch = true
 
   tags {
-    Name = "tf-wow-vanilla-server"
+    Name = "rg-tf-wow-vanilla-server"
   }
 
   depends_on = ["aws_internet_gateway.gateway"]
@@ -87,7 +87,7 @@ resource "aws_eip" "elastic_ip" {
   associate_with_private_ip = "${var.private_ip}"
 
   tags {
-    Name = "tf-wow-vanilla-server"
+    Name = "rg-tf-wow-vanilla-server"
   }
 
   depends_on = ["aws_internet_gateway.gateway"]
