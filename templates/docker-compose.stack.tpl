@@ -17,7 +17,7 @@ services:
       com.ragedunicorn.mysql.environment: "prod"
       com.ragedunicorn.mysql.description: "MySQL"
   wow-vanilla-server:
-    image: ragedunicorn/wow-vanilla:1.0.0-stable
+    image: ragedunicorn/wow-vanilla:1.0.1-stable
     secrets:
       - com.ragedunicorn.mysql.app_user
       - com.ragedunicorn.mysql.app_user_password
