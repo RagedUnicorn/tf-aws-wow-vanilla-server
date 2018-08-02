@@ -1,6 +1,6 @@
 aws_region = "eu-central-1"
 
-key_name = "ragedunicorn_generic"
+key_name = "rg-tf-wow-vanilla-server"
 
 ssh_security_group_name = "rg_tf_wow_vanilla_server_ssh"
 
