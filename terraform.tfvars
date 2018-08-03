@@ -2,13 +2,13 @@ aws_region = "eu-central-1"
 
 key_name = "rg-tf-wow-vanilla-server"
 
-ssh_security_group_name = "rg_tf_wow_vanilla_server_ssh"
+ssh_security_group_name = "rg-tf-wow-vanilla-server-ssh"
 
-outbound_security_group_name = "rg_tf_wow_vanilla_server_outbound"
+outbound_security_group_name = "rg-tf-wow-vanilla-server-outbound"
 
-wow_vanilla_security_group_name = "rg_tf_wow_vanilla_server_default"
+wow_vanilla_security_group_name = "rg-tf-wow-vanilla-server-default"
 
-docker_instance_name = "rg_tf_wow_vanilla_server"
+docker_instance_name = "rg-tf-wow-vanilla-server"
 
 operator_user = "ragedunicorn"
 
