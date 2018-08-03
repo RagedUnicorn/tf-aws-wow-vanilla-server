@@ -43,8 +43,7 @@ data "template_file" "init" {
 }
 
 module "server" {
-  # source     = "github.com/ragedunicorn/terraform-aws-rg-docker"
-  source     = "../terraform-aws-rg-docker"
+  source     = "github.com/ragedunicorn/terraform-aws-rg-docker"
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
   aws_region = "${var.aws_region}"
