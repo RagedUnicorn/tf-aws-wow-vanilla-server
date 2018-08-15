@@ -1,16 +1,19 @@
 ###################
 # Cloudwatch rules
 ###################
+
+# GMT -2 effective time 23:55
 resource "aws_cloudwatch_event_rule" "stop_instance" {
   name                = "rg-tf-wow-vanilla-server-ec2-stop-instance"
   description         = "Stop instances nightly"
-  schedule_expression = "cron(55 23 * * ? *)"
+  schedule_expression = "cron(55 21 * * ? *)"
 }
 
+# GMT -2 effective time 17:05
 resource "aws_cloudwatch_event_rule" "start_instance" {
   name                = "rg-tf-wow-vanilla-server-ec2-start-instance"
   description         = "Start instances in the evening"
-  schedule_expression = "cron(5 17 * * ? *)"
+  schedule_expression = "cron(5 15 * * ? *)"
 }
 
 ####################

@@ -86,8 +86,30 @@ terraform destroy
 
 ## Creates
 
+### CloudWatch Events
+
+Create event triggers for both starting and stopping the EC2 server.
+
+#### Start server
+
+Starts the server every evening by invoking the lambda function `RGTFStartStopWoWVanillaServer`.
+
+#### Stop server
+
+Stops the EC2 server at midnight by invoking the lambda function `RGTFStartStopWoWVanillaServer`.
+
+**Note:** Cloudwatch cron expressions work with GMT time. Times should be adjusted accordingly.
+
 ### DNS
 
 Creates an A record for the EC2 server. This has a dependency on a previously created host zone.
 
 `wow-vanilla.ragedunicorn.com - [EIP]`
+
+Dependency on host zone `ragedunicorn.com`
+
+Propagation of a new record can take some time. Test with nslookup:
+
+```
+ nslookup wow-vanilla.ragedunicorn.com
+ ```
