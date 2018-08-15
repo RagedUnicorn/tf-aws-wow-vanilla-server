@@ -83,3 +83,11 @@ terraform destroy
 | public_ip                   | The public IP of the created ec2 instance                  |
 | security_groups             | List of associated security groups of the created instance |
 | tags                        | List of tags for the created instance                      |
+
+## Creates
+
+### DNS
+
+Creates an A record for the EC2 server. This has a dependency on a previously created host zone.
+
+`wow-vanilla.ragedunicorn.com - [EIP]`
