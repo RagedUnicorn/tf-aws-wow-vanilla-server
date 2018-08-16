@@ -13,11 +13,6 @@ output "key_name" {
   value       = "${module.server.key_name}"
 }
 
-output "public_ip" {
-  description = "The public IP of the created ec2 instance"
-  value       = "${module.server.public_ip}"
-}
-
 output "security_groups" {
   description = "List of associated security groups of the created instance"
   value       = ["${module.server.security_groups}"]
