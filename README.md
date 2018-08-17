@@ -98,6 +98,22 @@ Installs a systemd service `wow-vanilla-server.service`. This service retrieves 
 
 This means that a change in those configs can be done directly in a gist which is then applied as soon as the ec2 machine is restarting or the systemd service is manually triggered.
 
+### Backup characters database
+
+Creates a script `database-util.sh` in the operators user home directory which allows for easy backup and restoring of the wow characters database.
+
+Basic usage
+
+```
+# backup and create dump in the current directory
+./database-util.sh backup ./
+
+# restore the characters database
+./database-util.sh restore ./[filename].sql
+```
+
+**Warning**: Restoring overwrites the current characters database.
+
 ### CloudWatch Events
 
 Create event triggers for both starting and stopping the EC2 server.

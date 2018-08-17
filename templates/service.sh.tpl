@@ -1,8 +1,7 @@
 #!/bin/bash
 # @author Michael Wiesendanger <michael.wiesendanger@gmail.com>
-# @description Initializing a single node swarm and setting up secrets for mysql container
+# @description Update mangosd.conf.tpl and realmd.conf.tpl then redeploy the configuration
 
-# abort when trying to use unset variable
 set -euo pipefail
 
 # download configurations from github gists

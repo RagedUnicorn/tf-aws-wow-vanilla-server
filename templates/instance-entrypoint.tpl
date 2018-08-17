@@ -2,7 +2,6 @@
 # @author Michael Wiesendanger <michael.wiesendanger@gmail.com>
 # @description Initializing a single node swarm and setting up secrets for mysql container
 
-# abort when trying to use unset variable
 set -euo pipefail
 
 # get public ip from ec2 metadata service and set as environment variable
@@ -39,6 +38,9 @@ sudo sed 's/$${operator_password}/${operator_password}/g; s/$${operator_user}/${
 sudo chmod +x /home/"${operator_user}"/service.sh
 
 sudo sed 's/$${operator_user}/${operator_user}/g' /home/"${operator_user}"/wow-vanilla-server.service.tpl > /etc/systemd/system/wow-vanilla-server.service
+
+sudo sed 's/$${mysql_app_user}/${mysql_app_user}/g ; s/$${mysql_app_user_password}/${mysql_app_user_password}/g' /home/"${operator_user}"/database-util.sh.tpl > /home/"${operator_user}"/database-util.sh
+sudo chmod +x /home/"${operator_user}"/database-util.sh
 
 # enable service on startup
 sudo systemctl enable wow-vanilla-server.service
