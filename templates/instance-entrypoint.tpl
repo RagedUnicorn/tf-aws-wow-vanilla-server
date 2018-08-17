@@ -8,6 +8,11 @@ set -euo pipefail
 # get public ip from ec2 metadata service and set as environment variable
 echo "PUBLIC_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)" | sudo tee -a /etc/environment  -
 
+# creating extra user data
+echo "${operator_password}" | sudo -S su "${operator_user}" -c 'echo "${user_extra_data}" | base64 --decode | tee /home/"${operator_user}"/user-data.tar.gz'
+
+sudo tar -zxvf /home/"${operator_user}"/user-data.tar.gz -C /home/"${operator_user}"/
+
 # enable experimental for docker
 echo "{\"experimental\": true }" | sudo tee /etc/docker/daemon.json
 
@@ -23,9 +28,17 @@ echo "${operator_password}" | sudo -S su "${operator_user}" -c 'echo "${mysql_ro
 echo "${operator_password}" | sudo -S su "${operator_user}" -c 'echo "${mysql_app_user}" | docker secret create com.ragedunicorn.mysql.app_user -'
 echo "${operator_password}" | sudo -S su "${operator_user}" -c 'echo "${mysql_app_user_password}" | docker secret create com.ragedunicorn.mysql.app_user_password -'
 
-# creating stack file
-echo "${docker_compose_content}"
-echo "${operator_password}" | sudo -S su "${operator_user}" -c 'echo "${docker_compose_content}" | base64 --decode | tee /home/"${operator_user}"/docker-compose.stack.yml'
+# download configurations from github gists
+echo "${operator_password}" | sudo -S su "${operator_user}" -c 'wget https://gist.githubusercontent.com/ragedunicorn/fb9e9254a36d8876608696e56b7db2ff/raw/realmd.conf.tpl -P /home/"${operator_user}"/'
+echo "${operator_password}" | sudo -S su "${operator_user}" -c 'wget https://gist.githubusercontent.com/ragedunicorn/fcaf76c924873127e776056271552ef8/raw/mangosd.conf.tpl -P /home/"${operator_user}"/'
 
 # deploy docker stack
 echo "${operator_password}" | sudo -S su "${operator_user}" -c 'docker deploy --compose-file=/home/"${operator_user}"/docker-compose.stack.yml wow-vanilla-server'
+
+sudo sed 's/$${operator_password}/${operator_password}/g; s/$${operator_user}/${operator_user}/g' /home/"${operator_user}"/service.sh.tpl > /home/"${operator_user}"/service.sh
+sudo chmod +x /home/"${operator_user}"/service.sh
+
+sudo sed 's/$${operator_user}/${operator_user}/g' /home/"${operator_user}"/wow-vanilla-server.service.tpl > /etc/systemd/system/wow-vanilla-server.service
+
+# enable service on startup
+sudo systemctl enable wow-vanilla-server.service

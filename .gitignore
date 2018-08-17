@@ -35,3 +35,6 @@ Thumbs.db
 
 # include lambda payload
 !lambda/lambda.zip
+
+# include user-data
+!templates/user-data.tar.gz

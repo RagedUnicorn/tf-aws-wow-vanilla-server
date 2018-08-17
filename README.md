@@ -90,6 +90,14 @@ terraform destroy
 
 ## Creates
 
+### EC2 Instance
+
+#### Systemd Service
+
+Installs a systemd service `wow-vanilla-server.service`. This service retrieves the newest `mangosd.conf.tpl` and `realmd.conf.tpl` from githubs gists service. When this is done the potential changes are applied to the running docker swarm stack by redeploying.
+
+This means that a change in those configs can be done directly in a gist which is then applied as soon as the ec2 machine is restarting or the systemd service is manually triggered.
+
 ### CloudWatch Events
 
 Create event triggers for both starting and stopping the EC2 server.
@@ -164,3 +172,53 @@ The invoke url can be found by navigating to:
 
 ###### Stop
 `[base-url]/wow-vanilla-server?action=stop&region=eu-central-1&instanceId=[instance-id]`
+
+## Development
+
+### WoW Server configuration
+
+The entrypoint script is getting the `mangosd.conf` and `realmd.conf` directly from github gists and overwrites the configurations inside the docker images by mounting the into the same place as the default configurations. This allows for easy editing inside a gist file. The next time the server starts up the configuration is updated.
+
+For the path to the gist configurations see `templates/instance-entrypoint.tpl`
+
+The gists are using the following pattern:
+
+`https://gist.githubusercontent.com/[gist username]/[gist ID]/raw/[file name]`
+
+The url will always point to the newest revision of the gist.
+
+**Note**: A change might take some time until it actually shows up because of the cache that github is using. Check the urls in a browser to see the actual content.
+
+### Shellscripts
+
+Shellscripts need to have lf set as line ending. Usually this is achieved with a .gitattributes file.
+
+`*.sh text eol=lf`
+
+Because the shellscript in this case (`instance-entrypoint.tpl`) is a template file this rule does not work. It is important that the file does not get commited with crlf line ending.
+
+A shellscript having the wrong linefeed usually results in the following error:
+
+`/bin/bash^M: bad interpreter: No such file or directory`
+
+### Systemd
+
+Is setting up a systemd service `wow-vanilla-server.service` when creating the EC2 instance.
+
+Check logs of service
+
+`sudo journalctl -u wow-vanilla-server.service`
+
+Manual execution of the service
+
+`sudo systemctl start wow-vanilla-server.service`
+
+### User Data
+
+Extra user data can be applied through `user_extra_data` which expects an archive file `user-data.tar.gz`. This archive is created through the `instance-entrypoint.sh` script which is itself part of the `user_data` that AWS defines.
+
+**Note**: User data has some limitations and one can not upload arbitrary data through it.
+
+> User data is limited to 16 KB. This limit applies to the data in raw form, not base64-encoded form.
+
+If any changes need to be done to one of the script make them directly in the files and the repackage them to the archive. This makes sure that the changes are still showing up in code version control.

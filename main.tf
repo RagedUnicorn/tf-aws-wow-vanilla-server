@@ -33,11 +33,7 @@ provider "template" {
 ###################################
 # Module user-data template script
 ###################################
-data "template_file" "compose_file_stack" {
-  template = "${file("${path.module}/templates/docker-compose.stack.tpl")}"
-}
-
-data "template_file" "init" {
+data "template_file" "instance-entrypoint" {
   template = "${file("${path.module}/templates/instance-entrypoint.tpl")}"
 
   vars {
@@ -46,7 +42,7 @@ data "template_file" "init" {
     mysql_root_password     = "${var.mysql_root_password}"
     mysql_app_user          = "${var.mysql_app_user}"
     mysql_app_user_password = "${var.mysql_app_user_password}"
-    docker_compose_content  = "${base64encode(data.template_file.compose_file_stack.rendered)}"
+    user_extra_data  = "${base64encode("${file("${path.module}/templates/user-data.tar.gz")}")}"
   }
 }
 
@@ -63,7 +59,7 @@ module "server" {
   ]
 
   docker_instance_name = "${var.docker_instance_name}"
-  instance_entrypoint  = "${data.template_file.init.rendered}"
+  instance_entrypoint  = "${data.template_file.instance-entrypoint.rendered}"
   private_ip           = "${var.private_ip}"
   subnet_id            = "${aws_subnet.subnet.id}"
   key_name             = "${var.key_name}"

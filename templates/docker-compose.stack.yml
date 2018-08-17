@@ -23,7 +23,10 @@ services:
       - com.ragedunicorn.mysql.app_user_password
     environment:
       - DATABASE_HOSTNAME=wow-vanilla-database
-      - PUBLIC_IP=$${PUBLIC_IP}
+      - PUBLIC_IP=${PUBLIC_IP}
+    volumes:
+      - /home/ragedunicorn/mangosd.conf.tpl:/opt/classic/etc/mangosd.conf.tpl
+      - /home/ragedunicorn/realmd.conf.tpl:/opt/classic/etc/realmd.conf.tpl
     ports:
       - "8085:8085"
       - "3724:3724"
