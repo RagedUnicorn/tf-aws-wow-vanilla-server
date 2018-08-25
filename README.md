@@ -10,7 +10,7 @@
 
 ### Credentials
 
-Credentials can be setup in different ways. The modules within this repository either expects the credentials to be available via environment variables or supplied directly to terraform as variables.
+Credentials can be setup in different ways. The modules within this repository either expect the credentials to be available via environment variables or supplied directly to terraform as variables.
 
 ```
 export AWS_ACCESS_KEY_ID="[acceskey]"
@@ -237,4 +237,4 @@ Extra user data can be applied through `user_extra_data` which expects an archiv
 
 > User data is limited to 16 KB. This limit applies to the data in raw form, not base64-encoded form.
 
-If any changes need to be done to one of the script make them directly in the files and the repackage them to the archive. This makes sure that the changes are still showing up in code version control.
+If any changes need to be done to one of the scripts apply them directly in the files and then package them into `user-data.tar.gz`. This makes sure that the changes are still showing up in code version control.
