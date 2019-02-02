@@ -40,8 +40,8 @@ services:
       timeout: 10s
       retries: 3
     labels:
-      com.ragedunicorn.tomcat.environment: "prod"
-      com.ragedunicorn.tomcat.description: "World of Warcraft Vanilla Server"
+      com.ragedunicorn.wow-vanilla.environment: "prod"
+      com.ragedunicorn.wow-vanilla.description: "World of Warcraft Vanilla Server"
 volumes:
   mysql_data: {}
 secrets:
