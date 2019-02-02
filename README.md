@@ -46,7 +46,7 @@ terraform apply
 ### Destroy
 
 ```
-# destory resource
+# destroy resource
 terraform destroy
 ```
 
@@ -171,7 +171,7 @@ See [AWS documentation](https://aws.amazon.com/premiumsupport/knowledge-center/m
 
 ### API Gateway
 
-Creates an Api for starting and stopping the EC2 instance by invoking the same Lambda function that is also used by CloudWatch.
+Creates an api for starting and stopping the EC2 instance by invoking the same Lambda function that is also used by CloudWatch.
 
 The invoke url can be found by navigating to:
 
