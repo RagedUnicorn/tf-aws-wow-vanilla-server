@@ -42,5 +42,36 @@ sudo sed 's/$${operator_user}/${operator_user}/g' /home/"${operator_user}"/wow-v
 sudo sed 's/$${mysql_app_user}/${mysql_app_user}/g ; s/$${mysql_app_user_password}/${mysql_app_user_password}/g' /home/"${operator_user}"/database-util.sh.tpl > /home/"${operator_user}"/database-util.sh
 sudo chmod +x /home/"${operator_user}"/database-util.sh
 
+# setup server data if not already done
+sudo mkdir -p data
+
+if [ ! -d /home/"${operator_user}"/data/vmaps ]; then
+  sudo wget -P data https://s3.eu-central-1.amazonaws.com/rg-tf-wow-vanilla-data/vmaps.tar.gz
+  sudo mkdir /home/"${operator_user}"/data/vmaps
+  sudo tar -xzf /home/"${operator_user}"/data/vmaps.tar.gz -C /home/"${operator_user}"/data/vmaps
+  sudo rm /home/"${operator_user}"/data/vmaps.tar.gz
+fi
+
+if [ ! -d /home/"${operator_user}"/data/mmaps ]; then
+  sudo wget -P data https://s3.eu-central-1.amazonaws.com/rg-tf-wow-vanilla-data/mmaps.tar.gz
+  sudo mkdir /home/"${operator_user}"/data/mmaps
+  sudo tar -xzf /home/"${operator_user}"/data/mmaps.tar.gz -C /home/"${operator_user}"/data/mmaps
+  sudo rm /home/"${operator_user}"/data/mmaps.tar.gz
+fi
+
+if [ ! -d /home/"${operator_user}"/data/maps ]; then
+  sudo wget -P data https://s3.eu-central-1.amazonaws.com/rg-tf-wow-vanilla-data/maps.tar.gz
+  sudo mkdir /home/"${operator_user}"/data/maps
+  sudo tar -xzf /home/"${operator_user}"/data/maps.tar.gz -C /home/"${operator_user}"/data/maps
+  sudo rm /home/"${operator_user}"/data/maps.tar.gz
+fi
+
+if [ ! -d /home/"${operator_user}"/data/dbc ]; then
+  sudo wget -P data https://s3.eu-central-1.amazonaws.com/rg-tf-wow-vanilla-data/dbc.tar.gz
+  sudo mkdir /home/"${operator_user}"/data/dbc
+  sudo tar -xzf /home/"${operator_user}"/data/dbc.tar.gz -C /home/"${operator_user}"/data/dbc
+  sudo rm /home/"${operator_user}"/data/dbc.tar.gz
+fi
+
 # enable service on startup
 sudo systemctl enable wow-vanilla-server.service
