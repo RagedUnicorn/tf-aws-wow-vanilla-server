@@ -37,12 +37,13 @@ data "template_file" "instance-entrypoint" {
   template = "${file("${path.module}/templates/instance-entrypoint.tpl")}"
 
   vars {
-    operator_user           = "${var.operator_user}"
-    operator_password       = "${var.operator_password}"
-    mysql_root_password     = "${var.mysql_root_password}"
-    mysql_app_user          = "${var.mysql_app_user}"
-    mysql_app_user_password = "${var.mysql_app_user_password}"
-    user_extra_data  = "${base64encode("${file("${path.module}/templates/user-data.tar.gz")}")}"
+    operator_user              = "${var.operator_user}"
+    operator_password          = "${var.operator_password}"
+    mysql_root_password        = "${var.mysql_root_password}"
+    mysql_app_user             = "${var.mysql_app_user}"
+    mysql_app_user_password    = "${var.mysql_app_user_password}"
+    client_data_s3_bucket_name = "${var.client_data_s3_bucket_name}"
+    user_extra_data            = "${base64encode("${file("${path.module}/templates/user-data.tar.gz")}")}"
   }
 }
 

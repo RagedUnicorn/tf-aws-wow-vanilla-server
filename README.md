@@ -56,6 +56,7 @@ terraform destroy
 |---------------------------------|-------------|--------|---------|----------|
 | access_key                      |             | string | -       | yes      |
 | aws_region                      |             | string | -       | yes      |
+| client_data_s3_bucket_name      |             | string | -       | yes      |
 | docker_instance_name            |             | string | -       | yes      |
 | key_name                        |             | string | -       | yes      |
 | mysql_app_user                  |             | string | -       | yes      |
@@ -84,7 +85,6 @@ terraform destroy
 | generated_cloud_init_config  | The rendered cloud-init config                             |
 | id                           | ID of the created instance                                 |
 | key_name                     | Key name of the created instance                           |
-| public_ip                    | The public IP of the created ec2 instance                  |
 | security_groups              | List of associated security groups of the created instance |
 | tags                         | List of tags for the created instance                      |
 
@@ -188,6 +188,14 @@ The invoke url can be found by navigating to:
 
 ###### Stop
 `[base-url]/wow-vanilla-server?action=stop&region=eu-central-1&instanceId=[instance-id]`
+
+### S3 Buckets
+
+Buckets for client data and data backups.
+
+The client data bucket `rg-tf-wow-vanilla-data` is used for storing the generated client data such as `dbc`, `maps`, `mmaps` and `vmaps`. There is no automated way to upload those files to the S3 buckets currently. They can be upload with any client that supports S3 buckets or directly with the aws S3 web interface. Additionally the files need to be set as public and the path needs to be updated in `client_data_s3_bucket_name` terraform variable (default `rg-tf-wow-vanilla-data`)
+
+The backup bucket `rg-tf-wow-vanilla-backup` is a store used for storing database backups that are created with the included database util. There is no implementation of automatic storing or retrieving files from this bucket. All steps are manual uploads and downloads.
 
 ## Development
 

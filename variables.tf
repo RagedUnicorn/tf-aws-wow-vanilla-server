@@ -13,3 +13,4 @@ variable "ssh_security_group_name" {}
 variable "outbound_security_group_name" {}
 variable "wow_vanilla_security_group_name" {}
 variable "docker_instance_name" {}
+variable "client_data_s3_bucket_name" {}

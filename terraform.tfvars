@@ -15,3 +15,5 @@ operator_user = "ragedunicorn"
 operator_group = "ragedunicorn"
 
 private_ip = "10.0.0.12"
+
+client_data_s3_bucket_name = "rg-tf-wow-vanilla-data"
