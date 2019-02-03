@@ -31,17 +31,6 @@ echo "${operator_password}" | sudo -S su "${operator_user}" -c 'echo "${mysql_ap
 echo "${operator_password}" | sudo -S su "${operator_user}" -c 'wget https://gist.githubusercontent.com/ragedunicorn/fb9e9254a36d8876608696e56b7db2ff/raw/realmd.conf.tpl -P /home/"${operator_user}"/'
 echo "${operator_password}" | sudo -S su "${operator_user}" -c 'wget https://gist.githubusercontent.com/ragedunicorn/fcaf76c924873127e776056271552ef8/raw/mangosd.conf.tpl -P /home/"${operator_user}"/'
 
-# deploy docker stack
-echo "${operator_password}" | sudo -S su "${operator_user}" -c 'docker deploy --compose-file=/home/"${operator_user}"/docker-compose.stack.yml wow-vanilla-server'
-
-sudo sed 's/$${operator_password}/${operator_password}/g; s/$${operator_user}/${operator_user}/g' /home/"${operator_user}"/service.sh.tpl > /home/"${operator_user}"/service.sh
-sudo chmod +x /home/"${operator_user}"/service.sh
-
-sudo sed 's/$${operator_user}/${operator_user}/g' /home/"${operator_user}"/wow-vanilla-server.service.tpl > /etc/systemd/system/wow-vanilla-server.service
-
-sudo sed 's/$${mysql_app_user}/${mysql_app_user}/g ; s/$${mysql_app_user_password}/${mysql_app_user_password}/g' /home/"${operator_user}"/database-util.sh.tpl > /home/"${operator_user}"/database-util.sh
-sudo chmod +x /home/"${operator_user}"/database-util.sh
-
 # setup server data if not already done
 sudo mkdir -p data
 
@@ -72,6 +61,17 @@ if [ ! -d /home/"${operator_user}"/data/dbc ]; then
   sudo tar -xzf /home/"${operator_user}"/data/dbc.tar.gz -C /home/"${operator_user}"/data/dbc
   sudo rm /home/"${operator_user}"/data/dbc.tar.gz
 fi
+
+# deploy docker stack
+echo "${operator_password}" | sudo -S su "${operator_user}" -c 'docker deploy --compose-file=/home/"${operator_user}"/docker-compose.stack.yml wow-vanilla-server'
+
+sudo sed 's/$${operator_password}/${operator_password}/g; s/$${operator_user}/${operator_user}/g' /home/"${operator_user}"/service.sh.tpl > /home/"${operator_user}"/service.sh
+sudo chmod +x /home/"${operator_user}"/service.sh
+
+sudo sed 's/$${operator_user}/${operator_user}/g' /home/"${operator_user}"/wow-vanilla-server.service.tpl > /etc/systemd/system/wow-vanilla-server.service
+
+sudo sed 's/$${mysql_app_user}/${mysql_app_user}/g ; s/$${mysql_app_user_password}/${mysql_app_user_password}/g' /home/"${operator_user}"/database-util.sh.tpl > /home/"${operator_user}"/database-util.sh
+sudo chmod +x /home/"${operator_user}"/database-util.sh
 
 # enable service on startup
 sudo systemctl enable wow-vanilla-server.service
