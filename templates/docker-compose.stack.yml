@@ -17,7 +17,7 @@ services:
       com.ragedunicorn.mysql.environment: "prod"
       com.ragedunicorn.mysql.description: "MySQL"
   wow-vanilla-server:
-    image: ragedunicorn/wow-vanilla:1.0.4-stable
+    image: ragedunicorn/wow-vanilla:1.0.5-stable
     secrets:
       - com.ragedunicorn.mysql.app_user
       - com.ragedunicorn.mysql.app_user_password
@@ -25,9 +25,9 @@ services:
       - DATABASE_HOSTNAME=wow-vanilla-database
       - PUBLIC_IP=${PUBLIC_IP}
     volumes:
-      - /home/ragedunicorn/mangosd.conf.tpl:/opt/classic/etc/mangosd.conf.tpl
-      - /home/ragedunicorn/realmd.conf.tpl:/opt/classic/etc/realmd.conf.tpl
-      - /home/ragedunicorn/data:/opt/classic/data
+      - /home/ragedunicorn/mangosd.conf.tpl:/opt/vanilla/etc/mangosd.conf.tpl
+      - /home/ragedunicorn/realmd.conf.tpl:/opt/vanilla/etc/realmd.conf.tpl
+      - /home/ragedunicorn/data:/opt/vanilla/data
     ports:
       - "8085:8085"
       - "3724:3724"
