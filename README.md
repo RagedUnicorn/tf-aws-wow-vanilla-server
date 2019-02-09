@@ -52,24 +52,24 @@ terraform destroy
 
 ## Inputs
 
-| Name                            | Description | Type   | Default | Required |
-|---------------------------------|-------------|--------|---------|----------|
-| access_key                      |             | string | -       | yes      |
-| aws_region                      |             | string | -       | yes      |
-| client_data_s3_bucket_name      |             | string | -       | yes      |
-| docker_instance_name            |             | string | -       | yes      |
-| key_name                        |             | string | -       | yes      |
-| mysql_app_user                  |             | string | -       | yes      |
-| mysql_app_user_password         |             | string | -       | yes      |
-| mysql_root_password             |             | string | -       | yes      |
-| operator_group                  |             | string | -       | yes      |
-| operator_password               |             | string | -       | yes      |
-| operator_user                   |             | string | -       | yes      |
-| outbound_security_group_name    |             | string | -       | yes      |
-| private_ip                      |             | string | -       | yes      |
-| secret_key                      |             | string | -       | yes      |
-| ssh_security_group_name         |             | string | -       | yes      |
-| wow_vanilla_security_group_name |             | string | -       | yes      |
+| Name                            | Description                                       | Type   | Default | Required |
+|---------------------------------|---------------------------------------------------|--------|---------|----------|
+| access_key                      |                                                   | string | -       | yes      |
+| aws_region                      |                                                   | string | -       | yes      |
+| client_data_s3_bucket_name      | Name of the s3 bucket to retrieve the client data | string | -       | yes      |
+| docker_instance_name            |                                                   | string | -       | yes      |
+| key_name                        |                                                   | string | -       | yes      |
+| mysql_app_user                  |                                                   | string | -       | yes      |
+| mysql_app_user_password         |                                                   | string | -       | yes      |
+| mysql_root_password             |                                                   | string | -       | yes      |
+| operator_group                  |                                                   | string | -       | yes      |
+| operator_password               |                                                   | string | -       | yes      |
+| operator_user                   |                                                   | string | -       | yes      |
+| outbound_security_group_name    |                                                   | string | -       | yes      |
+| private_ip                      |                                                   | string | -       | yes      |
+| secret_key                      |                                                   | string | -       | yes      |
+| ssh_security_group_name         |                                                   | string | -       | yes      |
+| wow_vanilla_security_group_name |                                                   | string | -       | yes      |
 
 ## Outputs
 
