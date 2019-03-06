@@ -66,7 +66,7 @@ terraform destroy
 | operator_password               |                                                   | string | -       | yes      |
 | operator_user                   |                                                   | string | -       | yes      |
 | outbound_security_group_name    |                                                   | string | -       | yes      |
-| private_ip                      |                                                   | string | -       | yes      |
+| private_ip                      | In the vpc cidr range such as 10.0.0.12           | string | -       | yes      |
 | secret_key                      |                                                   | string | -       | yes      |
 | ssh_security_group_name         |                                                   | string | -       | yes      |
 | wow_vanilla_security_group_name |                                                   | string | -       | yes      |
