@@ -27,7 +27,10 @@ services:
     volumes:
       - /home/ragedunicorn/mangosd.conf.tpl:/opt/vanilla/etc/mangosd.conf.tpl
       - /home/ragedunicorn/realmd.conf.tpl:/opt/vanilla/etc/realmd.conf.tpl
-      - /home/ragedunicorn/data:/opt/vanilla/data
+      - /home/ragedunicorn/data/dbc:/opt/vanilla/data/dbc
+      - /home/ragedunicorn/data/maps:/opt/vanilla/data/maps
+      - /home/ragedunicorn/data/mmaps:/opt/vanilla/data/mmaps
+      - /home/ragedunicorn/data/vmaps:/opt/vanilla/data/vmaps
     ports:
       - "8085:8085"
       - "3724:3724"
