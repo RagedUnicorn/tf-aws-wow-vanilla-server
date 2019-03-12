@@ -201,7 +201,7 @@ The backup bucket `rg-tf-wow-vanilla-backup` is a store used for storing databas
 
 ### WoW Server configuration
 
-The entrypoint script is getting the `mangosd.conf` and `realmd.conf` directly from github gists and overwrites the configurations inside the docker images by mounting the into the same place as the default configurations. This allows for easy editing inside a gist file. The next time the server starts up the configuration is updated.
+The entrypoint script is getting the `mangosd.conf.tpl` and `realmd.conf.tpl` directly from github gists and overwrites the configurations inside the docker images by mounting them into the same place as the default configurations. This allows for easy editing inside a gist file. The next time the server starts up the configuration is updated.
 
 For the path to the gist configurations see `templates/instance-entrypoint.tpl`
 
