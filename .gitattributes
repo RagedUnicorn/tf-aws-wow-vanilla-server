@@ -3,3 +3,4 @@
 
 # set scripts to lf
 *.sh text eol=lf
+*.tpl text eol=lf
