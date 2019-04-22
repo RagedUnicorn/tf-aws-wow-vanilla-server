@@ -25,8 +25,8 @@ services:
       - DATABASE_HOSTNAME=wow-vanilla-database
       - PUBLIC_IP=${PUBLIC_IP}
     volumes:
-      - /home/ragedunicorn/mangosd.conf.tpl:/opt/vanilla/etc/mangosd.conf.tpl
-      - /home/ragedunicorn/realmd.conf.tpl:/opt/vanilla/etc/realmd.conf.tpl
+      - /home/ragedunicorn/config/mangosd.conf.tpl:/opt/vanilla/etc/mangosd.conf.tpl
+      - /home/ragedunicorn/config/realmd.conf.tpl:/opt/vanilla/etc/realmd.conf.tpl
       - /home/ragedunicorn/data/dbc:/opt/vanilla/data/dbc
       - /home/ragedunicorn/data/maps:/opt/vanilla/data/maps
       - /home/ragedunicorn/data/mmaps:/opt/vanilla/data/mmaps

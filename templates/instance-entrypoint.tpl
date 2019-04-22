@@ -28,8 +28,9 @@ echo "${operator_password}" | sudo -S su "${operator_user}" -c 'echo "${mysql_ap
 echo "${operator_password}" | sudo -S su "${operator_user}" -c 'echo "${mysql_app_user_password}" | docker secret create com.ragedunicorn.mysql.app_user_password -'
 
 # download configurations from github gists
-echo "${operator_password}" | sudo -S su "${operator_user}" -c 'wget -O /home/"${operator_user}"/realmd.conf.tpl https://gist.githubusercontent.com/ragedunicorn/fb9e9254a36d8876608696e56b7db2ff/raw/realmd.conf.tpl'
-echo "${operator_password}" | sudo -S su "${operator_user}" -c 'wget -O /home/"${operator_user}"/mangosd.conf.tpl https://gist.githubusercontent.com/ragedunicorn/fcaf76c924873127e776056271552ef8/raw/mangosd.conf.tpl'
+echo "${operator_password}" | sudo -S su "${operator_user}" -c 'mkdir -p /home/"${operator_user}"/config/'
+echo "${operator_password}" | sudo -S su "${operator_user}" -c 'wget -O /home/"${operator_user}"/config/realmd.conf.tpl https://gist.githubusercontent.com/ragedunicorn/fb9e9254a36d8876608696e56b7db2ff/raw/realmd.conf.tpl'
+echo "${operator_password}" | sudo -S su "${operator_user}" -c 'wget -O /home/"${operator_user}"/config/mangosd.conf.tpl https://gist.githubusercontent.com/ragedunicorn/fcaf76c924873127e776056271552ef8/raw/mangosd.conf.tpl'
 
 # setup server data if not already done
 sudo mkdir -p data
